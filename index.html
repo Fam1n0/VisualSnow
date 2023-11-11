@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Snow Observation Log</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f7f7f7;
+  }
+  .container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  input[type="text"], textarea, input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .symptom-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .symptom-check label {
+    flex-grow: 1;
+  }
+  .symptom-check input[type=range] {
+    flex-basis: 60%;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #4cae4c;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Visual Snow Observation Log</h1>
+  <form id="observation-form">
+    <label for="environment">Environment:</label>
+    <input type="text" id="environment" name="environment" required>
+
+    <label for="description">Description of Visual Snow:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="activity">Current Activity:</label>
+    <input type="text" id="activity" name="activity" required>
+
+    
+    <!-- Symptoms Checklist Section -->
+<h2>Symptoms Checklist</h2>
+
+<div class="symptom-check">
+  <label for="static">Static:</label>
+  <input type="checkbox" id="static" name="static">
+  <input type="number" id="static-intensity" name="static-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="pixelation">Pixelation:</label>
+  <input type="checkbox" id="pixelation" name="pixelation">
+  <input type="number" id="pixelation-intensity" name="pixelation-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="flickering">Flickering:</label>
+  <input type="checkbox" id="flickering" name="flickering">
+  <input type="number" id="flickering-intensity" name="flickering-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="translucent-overlay">Translucent Overlay:</label>
+  <input type="checkbox" id="translucent-overlay" name="translucent-overlay">
+  <input type="number" id="translucent-overlay-intensity" name="translucent-overlay-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="floating-particles">Floating Particles:</label>
+  <input type="checkbox" id="floating-particles" name="floating-particles">
+  <input type="number" id="floating-particles-intensity" name="floating-particles-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="dynamic-snow">Dynamic Snow:</label>
+  <input type="checkbox" id="dynamic-snow" name="dynamic-snow">
+  <input type="number" id="dynamic-snow-intensity" name="dynamic-snow-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="color-spectrum">Color Spectrum:</label>
+  <input type="checkbox" id="color-spectrum" name="color-spectrum">
+  <input type="text" id="color-spectrum-colors" name="color-spectrum-colors" placeholder="Enter colors seen">
+</div>
+
+<div class="symptom-check">
+  <label for="tinnitus">Tinnitus:</label>
+  <input type="checkbox" id="tinnitus" name="tinnitus">
+  <input type="number" id="tinnitus-intensity" name="tinnitus-intensity" min="1" max="5" placeholder="1-5">
+</div>
+
+<div class="symptom-check">
+  <label for="migraine">Migraine:</label>
+  <input type="checkbox" id="migraine" name="migraine">
+  <input type="text" id="migraine-location" name="migraine-location" placeholder="Enter location of migraine">
+</div>
+
+    
+    
+    <button type="button" onclick="saveLog()">Save Log</button>
+  </form>
+  <div id="saved-logs"></div>
+</div>
+
+<script>
+  function saveLog() {
+    var environment = document.getElementById('environment').value;
+    var description = document.getElementById('description').value;
+    var activity = document.getElementById('activity').value;
+    var timestamp = new Date().toISOString();
+    var symptomsList = document.querySelectorAll('input[type="checkbox"]:checked');
+    var logEntries = 'Saved Log: ' + timestamp +
+                     '\nEnvironment: ' + environment +
+                     '\nDescription: ' + description +
+                     '\nActivity: ' + activity + '\n';
+
+    symptomsList.forEach(function(symptom) {
+      var intensity = document.getElementById(symptom.id + '-intensity').value;
+      logEntries += symptom.value + ' Intensity: ' + intensity + '\n';
+    });
+
+    var savedLogs = document.getElementById('saved-logs');
+    savedLogs.textContent += logEntries + '\n';
+
+    // Clear the form fields
+    document.getElementById('observation-form').reset();
+  }
+</script>
+</body>
+</html>
